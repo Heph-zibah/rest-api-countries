@@ -1,8 +1,13 @@
 <script setup>
+import RestAPI from './components/RestAPI.vue';
+import Header from "./components/Header.vue"
 </script>
 
 <template>
-  <h1>hello</h1>
+ 
+  <Header/>
+  <RestAPI/>
+ 
 </template>
 
 <style scoped>
