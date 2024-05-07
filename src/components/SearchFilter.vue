@@ -1,6 +1,22 @@
 <script setup>
-import {ref} from "vue"
+import { ref, onMounted, computed } from 'vue';
 
+const searchTerm = ref('');
+const regionFilter = ref('');
+
+const filterByRegion = (region) => {
+  regionFilter.value = region;
+  emit('updateRegionFilter', regionFilter.value);
+};
+
+const resetFilter = () => {
+  regionFilter.value = '';
+  emit('updateRegionFilter', regionFilter.value);
+};
+
+const updateSearch = () => {
+  emit('updateSearch', searchTerm.value);
+};
 
 const toggle = ref(false) 
 
@@ -15,7 +31,7 @@ const isShow = () => {
         <form action="" class="">
             <div class="flex items-center shadow p-3 rounded dark:shadow-lg bg-[white] dark:bg-darkElements text-lightInput dark:text-[white]">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search for a country..." class="bg-[transparent]  text-sm placeholder:text-lightInput placeholder:text-sm outline-none border-0 pl-3 w-full md:w-fit">
+                <input  v-model="searchTerm" @input="updateSearch" type="text" placeholder="Search for a country..." class="bg-[transparent]  text-sm placeholder:text-lightInput placeholder:text-sm outline-none border-0 pl-3 w-full md:w-fit">
             </div>
         </form>
         <div class="relative">
@@ -25,11 +41,15 @@ const isShow = () => {
                 <i v-else  class="fa-solid fa-chevron-down"></i>
                 
             </div >
-            <div v-if="toggle" class="px-4 pt-3 rounded w-60 bg-[white] dark:bg-darkElements text-lightText dark:text-[white] text-sm mt-1 absolute">
-                <p class="cursor-pointer pb-3">Nigeria</p>
-                <p class="cursor-pointer pb-3">Nigeria</p><p class="cursor-pointer pb-3">Nigeria</p><p class="cursor-pointer pb-3">Nigeria</p><p class="cursor-pointer pb-3">Nigeria</p><p class="cursor-pointer pb-3">Nigeria</p>
+            <ul v-if="toggle" class="px-4 pt-3 rounded w-60 bg-[white] dark:bg-darkElements text-lightText dark:text-[white] text-sm mt-1 absolute">
+                <li class="cursor-pointer pb-3" @click="resetFilter">All</li>
+                <li class="cursor-pointer pb-3" @click="filterByRegion('Africa')">Africa</li>
+                <li class="cursor-pointer pb-3" @click="filterByRegion('America')">America</li>
+                <li class="cursor-pointer pb-3" @click="filterByRegion('Asia')">Asia</li>
+                <li class="cursor-pointer pb-3" @click="filterByRegion('Europe')">Europe</li>
+                <li class="cursor-pointer pb-3" @click="filterByRegion('Oceania')">Oceania</li>
 
-            </div>
+            </ul>
         </div>
     </section>
 </template>

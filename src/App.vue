@@ -6,7 +6,8 @@ import Header from "./components/Header.vue"
 <template>
  
   <Header/>
-  <RestAPI/>
+  <!-- <RestAPI/> -->
+   <router-view></router-view>
  
 </template>
 
